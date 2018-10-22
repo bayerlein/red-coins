@@ -1,0 +1,15 @@
+(local)
+
+giovanni-PC\giovanni
+
+
+golang.org/x/crypto/bcrypt
+github.com/denisenkom/go-mssqldb
+
+
+
+TODO por ordem de prioridade:
+
+ - criar rotas para relatorios
+ - criar um "connectionFactory"
+ - deixar as variaveis parametrizadas(tem que ver o docker)
