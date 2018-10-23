@@ -10,26 +10,22 @@ import (
 	_ "github.com/denisenkom/go-mssqldb"
 )
 
-type UserRepository struct{}
+type UserRepository struct {
+	Db    *sql.DB
+	ErrDB error
+}
 
 func NewUserRepository() *UserRepository {
-	return &UserRepository{}
+	connection, err := GetDBInstance().GetConnectionPool()
+	return &UserRepository{Db: connection, ErrDB: err}
 }
 
 func (repository *UserRepository) CreateNewUser(user models.User) {
 
-	var server = "localhost:1433"
-	var userdb = "REDCOINS"
-	var password = "red_ventures"
-
-	connString := fmt.Sprintf("server=%s;user id=%s;password=%s;database=RedCoins",
-		server, userdb, password)
-
-	condb, errdb := sql.Open("mssql", connString)
-	if errdb != nil {
-		fmt.Println(" Error open db:", errdb.Error())
+	if repository.ErrDB != nil {
+		fmt.Println(" Error open db:", repository.ErrDB.Error())
 	}
-	tx, err := condb.Begin()
+	tx, err := repository.Db.Begin()
 	if err != nil {
 		log.Fatal(err)
 	}

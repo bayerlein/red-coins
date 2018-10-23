@@ -10,28 +10,26 @@ import (
 	_ "github.com/denisenkom/go-mssqldb"
 )
 
-type BitCoinTransactionRepository struct{}
+type BitCoinTransactionRepository struct {
+	Db    *sql.DB
+	ErrDB error
+}
 
 func NewBitCoinTransactionRepository() *BitCoinTransactionRepository {
-	return &BitCoinTransactionRepository{}
+	connection, err := GetDBInstance().GetConnectionPool()
+	return &BitCoinTransactionRepository{Db: connection, ErrDB: err}
+}
+
+func (repository *BitCoinTransactionRepository) GenerateReportByUserID(userId int) {
+
 }
 
 func (repository *BitCoinTransactionRepository) RegisterTransaction(transaction models.BitCoinTransaction) {
 
-	var server = "localhost:20"
-	var userdb = "REDCOINS"
-	var password = "red_ventures"
-
-	fmt.Println(userdb)
-
-	connString := fmt.Sprintf("server=%s;user id=%s;password=%s;database=RedCoins",
-		server, userdb, password)
-
-	condb, errdb := sql.Open("mssql", connString)
-	if errdb != nil {
-		fmt.Println(" Error open db:", errdb.Error())
+	if repository.ErrDB != nil {
+		fmt.Println(" Error open db:", repository.ErrDB.Error())
 	}
-	tx, err := condb.Begin()
+	tx, err := repository.Db.Begin()
 	if err != nil {
 		log.Fatal(err)
 	}

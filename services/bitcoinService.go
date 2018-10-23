@@ -22,16 +22,17 @@ const (
 
 var bitCoinCache = cache.New(1*time.Hour, 1*time.Hour)
 
-type BitCoinService struct{}
-
-var bitcoinRepository = repositories.NewBitCoinTransactionRepository()
-
-func NewBitCoinService() *BitCoinService {
-	return &BitCoinService{}
+type BitCoinService struct {
+	Repository *repositories.BitCoinTransactionRepository
 }
 
-func (service *BitCoinService) GenerateReportByUser() {
+func NewBitCoinService() *BitCoinService {
+	bitcoinRepository := repositories.NewBitCoinTransactionRepository()
+	return &BitCoinService{Repository: bitcoinRepository}
+}
 
+func (service *BitCoinService) GenerateReportByUser(userId int) {
+	service.Repository.GenerateReportByUserID(userId)
 }
 
 func (service *BitCoinService) GenerateReportByDay() {
@@ -47,7 +48,7 @@ func (service *BitCoinService) BuyBitCoins(amount float64, user models.User) (mo
 	transaction.Type = BUY
 	transaction.User = models.User{Id: user.Id}
 
-	bitcoinRepository.RegisterTransaction(transaction)
+	service.Repository.RegisterTransaction(transaction)
 
 	return transaction, "Compra realizada com sucesso."
 }
@@ -62,7 +63,7 @@ func (service *BitCoinService) SellBitCoins(amount float64, user models.User) (m
 	transaction.Type = SELL
 	transaction.User = models.User{Id: user.Id}
 
-	bitcoinRepository.RegisterTransaction(transaction)
+	service.Repository.RegisterTransaction(transaction)
 
 	return transaction, "Venda realizada com sucesso."
 }
