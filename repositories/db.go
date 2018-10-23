@@ -5,7 +5,7 @@ import (
 	"fmt"
 )
 
-var server = "localhost:1433"
+var server = "localhost"
 var userdb = "REDCOINS"
 var password = "red_ventures"
 

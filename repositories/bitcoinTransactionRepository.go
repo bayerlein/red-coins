@@ -21,33 +21,22 @@ func NewBitCoinTransactionRepository() *BitCoinTransactionRepository {
 }
 
 func (repository *BitCoinTransactionRepository) GenerateReportByUserID(userId int) {
-	fmt.Println("select######")
-	var (
-		id     int
-		amount float64
-	)
-	stmt, err := repository.Db.Prepare("SELECT id, amount FROM bitcoin_transaction")
+	tsql := fmt.Sprintf("SELECT id, amount FROM bitcoin_transaction")
+	rows, err := repository.Db.Query(tsql)
 	if err != nil {
-		log.Fatal(err)
-	}
-	defer stmt.Close() // closing the statement
-	rows, err := stmt.Query(1)
-	// rows, err := repository.Db.QueryRow("SELECT id, amount FROM bitcoin_transaction")
-	if err != nil {
-		log.Fatal(err)
+		fmt.Println("Error reading rows: " + err.Error())
 	}
 	defer rows.Close()
+	count := 0
 	for rows.Next() {
+		var amount float64
+		var id int
 		err := rows.Scan(&id, &amount)
 		if err != nil {
-			log.Fatal(err)
+			fmt.Println("Error reading rows: " + err.Error())
 		}
-		fmt.Println(amount)
-		log.Println(id, amount)
-	}
-	err = rows.Err()
-	if err != nil {
-		log.Fatal(err)
+		fmt.Printf("ID: %d, Name: %s, Location: %s\n", id, amount)
+		count++
 	}
 }
 
