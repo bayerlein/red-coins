@@ -21,7 +21,34 @@ func NewBitCoinTransactionRepository() *BitCoinTransactionRepository {
 }
 
 func (repository *BitCoinTransactionRepository) GenerateReportByUserID(userId int) {
-
+	fmt.Println("select######")
+	var (
+		id     int
+		amount float64
+	)
+	stmt, err := repository.Db.Prepare("SELECT id, amount FROM bitcoin_transaction")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer stmt.Close() // closing the statement
+	rows, err := stmt.Query(1)
+	// rows, err := repository.Db.QueryRow("SELECT id, amount FROM bitcoin_transaction")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer rows.Close()
+	for rows.Next() {
+		err := rows.Scan(&id, &amount)
+		if err != nil {
+			log.Fatal(err)
+		}
+		fmt.Println(amount)
+		log.Println(id, amount)
+	}
+	err = rows.Err()
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 
 func (repository *BitCoinTransactionRepository) RegisterTransaction(transaction models.BitCoinTransaction) {
