@@ -18,7 +18,7 @@ func NewUserRepository() *UserRepository {
 
 func (repository *UserRepository) CreateNewUser(user models.User) {
 
-	var server = "localhost"
+	var server = "localhost:1433"
 	var userdb = "REDCOINS"
 	var password = "red_ventures"
 

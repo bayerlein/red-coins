@@ -5,10 +5,6 @@ import (
 
 	"github.com/bayerlein/red-coins/services"
 
-	// "github.com/bayerlein/red-coins/models"
-	// "github.com/bayerlein/red-coins/services"
-	// "github.com/bayerlein/red-coins/utils"
-
 	"github.com/bayerlein/red-coins/models"
 	"github.com/bayerlein/red-coins/utils"
 	"github.com/go-chi/render"

@@ -18,9 +18,11 @@ func NewBitCoinTransactionRepository() *BitCoinTransactionRepository {
 
 func (repository *BitCoinTransactionRepository) RegisterTransaction(transaction models.BitCoinTransaction) {
 
-	var server = "localhost"
+	var server = "localhost:20"
 	var userdb = "REDCOINS"
 	var password = "red_ventures"
+
+	fmt.Println(userdb)
 
 	connString := fmt.Sprintf("server=%s;user id=%s;password=%s;database=RedCoins",
 		server, userdb, password)
