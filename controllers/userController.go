@@ -2,10 +2,15 @@ package controllers
 
 import (
 	"net/http"
-	"red-coins/models"
-	"red-coins/services"
-	"red-coins/utils"
 
+	"github.com/bayerlein/red-coins/services"
+
+	// "github.com/bayerlein/red-coins/models"
+	// "github.com/bayerlein/red-coins/services"
+	// "github.com/bayerlein/red-coins/utils"
+
+	"github.com/bayerlein/red-coins/models"
+	"github.com/bayerlein/red-coins/utils"
 	"github.com/go-chi/render"
 
 	"github.com/go-chi/chi"

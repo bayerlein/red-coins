@@ -2,10 +2,11 @@
 package services
 
 import (
-	"red-coins/models"
-	"red-coins/repositories"
-	"red-coins/utils"
 	"time"
+
+	"github.com/bayerlein/red-coins/models"
+	"github.com/bayerlein/red-coins/repositories"
+	"github.com/bayerlein/red-coins/utils"
 )
 
 type UserService struct{}

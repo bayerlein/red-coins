@@ -4,7 +4,8 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
-	"red-coins/models"
+
+	"github.com/bayerlein/red-coins/models"
 
 	_ "github.com/denisenkom/go-mssqldb"
 )

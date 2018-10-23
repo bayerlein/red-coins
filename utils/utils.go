@@ -3,7 +3,8 @@ package utils
 
 import (
 	"log"
-	"red-coins/models"
+
+	"github.com/bayerlein/red-coins/models"
 
 	"golang.org/x/crypto/bcrypt"
 )

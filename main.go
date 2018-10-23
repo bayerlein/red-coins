@@ -4,7 +4,8 @@ package main
 import (
 	"log"
 	"net/http"
-	"red-coins/controllers"
+
+	"github.com/bayerlein/red-coins/controllers"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"

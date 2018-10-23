@@ -5,9 +5,10 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"red-coins/models"
-	"red-coins/repositories"
 	"time"
+
+	"github.com/bayerlein/red-coins/models"
+	"github.com/bayerlein/red-coins/repositories"
 
 	"github.com/patrickmn/go-cache"
 )
