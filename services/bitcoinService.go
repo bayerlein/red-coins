@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/bayerlein/red-coins/models"
@@ -90,7 +91,7 @@ func getBitCoinPrice() float64 {
 func getBitCoinPriceByAPI() float64 {
 	fmt.Println("CHAMANDO API REST PRECO BITCOIN")
 	var responseOBJ models.BitCoinResponse
-	res, err := http.Get("https://api.coinmarketcap.com/v2/ticker/1/?convert=BRL")
+	res, err := http.Get(os.Getenv("BITCOIN_INFO_URL"))
 
 	var bitcoinPrice float64
 
