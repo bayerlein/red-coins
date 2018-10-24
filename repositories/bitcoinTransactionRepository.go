@@ -20,24 +20,50 @@ func NewBitCoinTransactionRepository() *BitCoinTransactionRepository {
 	return &BitCoinTransactionRepository{Db: connection, ErrDB: err}
 }
 
-func (repository *BitCoinTransactionRepository) GenerateReportByUserID(userId int) {
-	tsql := fmt.Sprintf("SELECT id, amount FROM bitcoin_transaction")
+func (repository *BitCoinTransactionRepository) GenerateReportByDate(date string) []models.BitCoinTransaction {
+	transactions := make([]models.BitCoinTransaction, 1)
+	tsql := fmt.Sprintf("select * from bitcoin_transaction tb where datediff(day, tb.transaction_date, '%s') = 0", date)
 	rows, err := repository.Db.Query(tsql)
 	if err != nil {
 		fmt.Println("Error reading rows: " + err.Error())
 	}
 	defer rows.Close()
-	count := 0
 	for rows.Next() {
-		var amount float64
-		var id int
-		err := rows.Scan(&id, &amount)
+		transaction := models.BitCoinTransaction{}
+
+		err := rows.Scan(&transaction.Id, &transaction.Amount, &transaction.Total, &transaction.PriceUsed, &transaction.Date, &transaction.Type, &transaction.User.Id)
+
+		transactions = append(transactions, transaction)
 		if err != nil {
 			fmt.Println("Error reading rows: " + err.Error())
 		}
-		fmt.Printf("ID: %d, Name: %s, Location: %s\n", id, amount)
-		count++
+		fmt.Println(transactions)
 	}
+
+	return transactions
+}
+
+func (repository *BitCoinTransactionRepository) GenerateReportByUserID(userId int) []models.BitCoinTransaction {
+	transactions := make([]models.BitCoinTransaction, 1)
+	tsql := fmt.Sprintf("SELECT id, amount, total_value, price_used, transaction_date, transaction_type, user_id FROM bitcoin_transaction WHERE user_id = %d", userId)
+	rows, err := repository.Db.Query(tsql)
+	if err != nil {
+		fmt.Println("Error reading rows: " + err.Error())
+	}
+	defer rows.Close()
+	for rows.Next() {
+		transaction := models.BitCoinTransaction{}
+
+		err := rows.Scan(&transaction.Id, &transaction.Amount, &transaction.Total, &transaction.PriceUsed, &transaction.Date, &transaction.Type, &transaction.User.Id)
+
+		transactions = append(transactions, transaction)
+		if err != nil {
+			fmt.Println("Error reading rows: " + err.Error())
+		}
+		fmt.Println(transactions)
+	}
+
+	return transactions
 }
 
 func (repository *BitCoinTransactionRepository) RegisterTransaction(transaction models.BitCoinTransaction) {

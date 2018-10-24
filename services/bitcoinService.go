@@ -31,11 +31,18 @@ func NewBitCoinService() *BitCoinService {
 	return &BitCoinService{Repository: bitcoinRepository}
 }
 
-func (service *BitCoinService) GenerateReportByUser(userId int) {
-	service.Repository.GenerateReportByUserID(userId)
+func (service *BitCoinService) GenerateReportByUser(userId int) ([]models.BitCoinTransaction, string) {
+
+	transactions := service.Repository.GenerateReportByUserID(userId)
+
+	return transactions, fmt.Sprintf("Relatorio usuario: %d", userId)
 }
 
-func (service *BitCoinService) GenerateReportByDay() {
+func (service *BitCoinService) GenerateReportByDate(date string) ([]models.BitCoinTransaction, string) {
+	transactions := service.Repository.GenerateReportByDate(date)
+
+	return transactions, fmt.Sprintf("Relatorio data: %d", date)
+
 }
 
 func (service *BitCoinService) BuyBitCoins(amount float64, user models.User) (models.BitCoinTransaction, string) {

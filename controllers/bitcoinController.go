@@ -35,7 +35,7 @@ func (bitCoin BitCoinController) Routes() *chi.Mux {
 	router.Get("/sell/{amount}", SellBitCoins)
 	router.Get("/buy/{amount}", BuyBitCoins)
 	router.Get("/reports/byuser/{user_id}", GenerateReportByUser)
-	router.Get("/reports/byday/{date}", GenerateReportByDay)
+	router.Get("/reports/byday/{date}", GenerateReportByDate)
 
 	return router
 }
@@ -43,11 +43,15 @@ func (bitCoin BitCoinController) Routes() *chi.Mux {
 func GenerateReportByUser(w http.ResponseWriter, r *http.Request) {
 	param := chi.URLParam(r, "user_id")
 	userId, _ := strconv.Atoi(param)
-	bitCoinService.GenerateReportByUser(userId)
+	value, message := bitCoinService.GenerateReportByUser(userId)
+	response := utils.CreateResponseObject(value, message)
+	render.JSON(w, r, response)
 }
-func GenerateReportByDay(w http.ResponseWriter, r *http.Request) {
-
-	bitCoinService.GenerateReportByDay()
+func GenerateReportByDate(w http.ResponseWriter, r *http.Request) {
+	param := chi.URLParam(r, "date")
+	value, message := bitCoinService.GenerateReportByDate(param)
+	response := utils.CreateResponseObject(value, message)
+	render.JSON(w, r, response)
 }
 
 func BuyBitCoins(w http.ResponseWriter, r *http.Request) {
