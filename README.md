@@ -40,3 +40,9 @@
 <p>"sub": "1234567890",</p>
 <p>"name": "John Doe",</p>
 <p>"email": "giovannibayerlein12@gmail.comjwt",</p>
+
+# Setup
+<p>Na raiz do projeto existe um arquivo 'env.list', este arquivo contém algumas variaveis que parametrizam a API. Caso haja a necessidade de mudar alguma configuração, então é só mudar o valor que está definido neste arquivo e a mudança refletir na api</p>
+<p>Foi utilizado um conteiner Docker para publicar a API, segue exemplo de comando utilizados:</p>
+<p>Buildar o projeto: $ docker build -t red-coins-app .</p>
+<p>Publicar o projeto: </p>
