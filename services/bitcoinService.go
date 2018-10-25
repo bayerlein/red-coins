@@ -34,20 +34,28 @@ func NewBitCoinService() *BitCoinService {
 
 func (service *BitCoinService) GenerateReportByUser(userId int) ([]models.BitCoinTransaction, string) {
 
-	transactions := service.Repository.GenerateReportByUserID(userId)
+	transactions, err := service.Repository.GenerateReportByUserID(userId)
+
+	if err != nil {
+		return nil, err.Error()
+	}
 
 	return transactions, fmt.Sprintf("Relatorio usuario: %d", userId)
 }
 
 func (service *BitCoinService) GenerateReportByDate(date string) ([]models.BitCoinTransaction, string) {
-	transactions := service.Repository.GenerateReportByDate(date)
+	transactions, err := service.Repository.GenerateReportByDate(date)
+
+	if err != nil {
+		return nil, err.Error()
+	}
 
 	return transactions, fmt.Sprintf("Relatorio data: %s", date)
 
 }
 
 func (service *BitCoinService) BuyBitCoins(amount float64, user models.User) (models.BitCoinTransaction, string) {
-	price := getBitCoinPrice()
+	price, err := getBitCoinPrice()
 	transaction := models.BitCoinTransaction{}
 	transaction.Amount = amount
 	transaction.Date = time.Now()
@@ -56,13 +64,16 @@ func (service *BitCoinService) BuyBitCoins(amount float64, user models.User) (mo
 	transaction.Type = BUY
 	transaction.User = models.User{Id: user.Id}
 
-	service.Repository.RegisterTransaction(transaction)
+	err = service.Repository.RegisterTransaction(transaction)
 
+	if err != nil {
+		return models.BitCoinTransaction{}, err.Error()
+	}
 	return transaction, "Compra realizada com sucesso."
 }
 
 func (service *BitCoinService) SellBitCoins(amount float64, user models.User) (models.BitCoinTransaction, string) {
-	price := getBitCoinPrice()
+	price, err := getBitCoinPrice()
 	transaction := models.BitCoinTransaction{}
 	transaction.Amount = amount
 	transaction.Date = time.Now()
@@ -71,24 +82,27 @@ func (service *BitCoinService) SellBitCoins(amount float64, user models.User) (m
 	transaction.Type = SELL
 	transaction.User = models.User{Id: user.Id}
 
-	service.Repository.RegisterTransaction(transaction)
+	err = service.Repository.RegisterTransaction(transaction)
+
+	if err != nil {
+		return models.BitCoinTransaction{}, err.Error()
+	}
 
 	return transaction, "Venda realizada com sucesso."
 }
 
-func getBitCoinPrice() float64 {
+func getBitCoinPrice() (float64, error) {
 	fmt.Println("TENTANDO O CACHE")
 	priceCache, found := bitCoinCache.Get("bitcoin_price")
 	if found {
 		fmt.Println(priceCache)
-		return priceCache.(float64)
+		return priceCache.(float64), nil
 	} else {
 		fmt.Println("NAO ACHOU NO CACHE")
-
 		return getBitCoinPriceByAPI()
 	}
 }
-func getBitCoinPriceByAPI() float64 {
+func getBitCoinPriceByAPI() (float64, error) {
 	fmt.Println("CHAMANDO API REST PRECO BITCOIN")
 	var responseOBJ models.BitCoinResponse
 	res, err := http.Get(os.Getenv("BITCOIN_INFO_URL"))
@@ -97,6 +111,7 @@ func getBitCoinPriceByAPI() float64 {
 
 	if err != nil {
 		fmt.Println("Erro: ", err.Error())
+		return 0.0, err
 	} else {
 		data, _ := ioutil.ReadAll(res.Body)
 		json.Unmarshal(data, &responseOBJ)
@@ -104,5 +119,5 @@ func getBitCoinPriceByAPI() float64 {
 		fmt.Println("PRECO PELA API: ", bitcoinPrice)
 		bitCoinCache.Set("bitcoin_price", bitcoinPrice, cache.DefaultExpiration)
 	}
-	return bitcoinPrice
+	return bitcoinPrice, nil
 }
