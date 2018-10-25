@@ -1,4 +1,4 @@
-//Pacote expoem os metodos contendo as regras de negocio
+// pacote contem toda a regra de negocio da api
 package services
 
 import (

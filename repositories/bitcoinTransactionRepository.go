@@ -1,3 +1,4 @@
+// pacote contem os acessos realizados à base de dados
 package repositories
 
 import (
@@ -9,16 +10,19 @@ import (
 	_ "github.com/denisenkom/go-mssqldb"
 )
 
+// define uma estrutura para o repositorio de bitcoins
 type BitCoinTransactionRepository struct {
 	Db    *sql.DB
 	ErrDB error
 }
 
+// retorna um ponteiro para o repositorio
 func NewBitCoinTransactionRepository() *BitCoinTransactionRepository {
-	connection, err := GetDBInstance().GetConnectionPool()
+	connection, err := GetDBInstance().GetConnectionPool() // pega o pool de conexão criado
 	return &BitCoinTransactionRepository{Db: connection, ErrDB: err}
 }
 
+// retorna um relatorio usando uma data como filtro
 func (repository *BitCoinTransactionRepository) GenerateReportByDate(date string) ([]models.BitCoinTransaction, error) {
 	transactions := make([]models.BitCoinTransaction, 1)
 	tsql := fmt.Sprintf("select * from bitcoin_transaction tb where datediff(day, tb.transaction_date, '%s') = 0", date)
@@ -44,6 +48,7 @@ func (repository *BitCoinTransactionRepository) GenerateReportByDate(date string
 	return transactions, nil
 }
 
+// retorna um relatorio usando um user_id como filtro
 func (repository *BitCoinTransactionRepository) GenerateReportByUserID(userId int) ([]models.BitCoinTransaction, error) {
 	transactions := make([]models.BitCoinTransaction, 1)
 	tsql := fmt.Sprintf("SELECT id, amount, total_value, price_used, transaction_date, transaction_type, user_id FROM bitcoin_transaction WHERE user_id = %d", userId)
@@ -69,6 +74,7 @@ func (repository *BitCoinTransactionRepository) GenerateReportByUserID(userId in
 	return transactions, nil
 }
 
+// registra uma transação, podem ser compra ou venda
 func (repository *BitCoinTransactionRepository) RegisterTransaction(transaction models.BitCoinTransaction) error {
 
 	if repository.ErrDB != nil {

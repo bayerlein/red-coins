@@ -1,3 +1,4 @@
+//Pacote que contem todos os mapeamentos de rotas da API
 package controllers
 
 import (
@@ -12,14 +13,18 @@ import (
 	"github.com/go-chi/chi"
 )
 
+// Instancia uma service de usuário, onde contem as regras de negocio
 var service = services.NewUserService()
 
+// Define uma estrutura para as rotas relacionadas à usuário
 type UserController struct{}
 
+// Função que retorna um ponteiro do tipo UserController
 func NewUserController() *UserController {
 	return &UserController{}
 }
 
+// Define o mapeamento das rotas que serão expostas
 func (user UserController) Routes() *chi.Mux {
 	router := chi.NewRouter()
 	router.Post("/", CreateNewUser)
@@ -27,6 +32,7 @@ func (user UserController) Routes() *chi.Mux {
 	return router
 }
 
+// Processa a requisição para cadastrar um novo usuário
 func CreateNewUser(w http.ResponseWriter, r *http.Request) {
 
 	r.ParseForm()

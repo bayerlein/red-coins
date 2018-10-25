@@ -14,10 +14,14 @@ func CreateResponseObject(data interface{}, message string) models.Response {
 
 	return models.Response{Data: data, Message: message}
 }
+
+// compara alguma senha com algum hash e retorna true caso sejam equivalentes
 func ComparePassword(password, hash string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
 	return err == nil
 }
+
+// gera um hash do password informado
 func EncryptPassword(pwd []byte) string {
 	hash, err := bcrypt.GenerateFromPassword(pwd, bcrypt.MinCost)
 

@@ -1,3 +1,4 @@
+// pacote contem os acessos realizados à base de dados
 package repositories
 
 import (
@@ -10,16 +11,19 @@ import (
 	_ "github.com/denisenkom/go-mssqldb"
 )
 
+// define uma estrutura para o repositorio
 type UserRepository struct {
 	Db    *sql.DB
 	ErrDB error
 }
 
+// retorna um ponteiro UserRepository
 func NewUserRepository() *UserRepository {
-	connection, err := GetDBInstance().GetConnectionPool()
+	connection, err := GetDBInstance().GetConnectionPool() // pega o pool de conexões
 	return &UserRepository{Db: connection, ErrDB: err}
 }
 
+// registra um novo usuário na base pegando as informações passadas como parametro da função
 func (repository *UserRepository) CreateNewUser(user models.User) {
 
 	if repository.ErrDB != nil {
