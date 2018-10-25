@@ -1,40 +1,42 @@
 # Rotas de usuário
-Existe apenas umas única rota para usuário: POST /v1/api/user/
-Esta rota é publica, então não precisa estar autenticado para acessa-la
-Exemplo de requisição:
-Headers: Content-Type: application/x-www-form-urlencoded
-Body: 
-email: email@email.com
-password: senha
-full_name: nome completo
-date_of_birth: 2018-10-25
+<p>Existe apenas umas única rota para usuário: POST /v1/api/user/</p>
+<p>Esta rota é publica, então não precisa estar autenticado para acessa-la</p>
+<p>Exemplo de requisição:</p>
+<p>Headers: Content-Type: application/x-www-form-urlencoded</p>
+<p>Body: </p>
+<p>email: email@email.com</p>
+<p>password: senha</p>
+<p>full_name: nome completo</p>
+<p>date_of_birth: 2018-10-25</p>
 
 # Rotas de bitcoin
-Contanto com os relatórios, existem 4 rotas:
-Vender bitcoin: GET /v1/api/bitcoin/sell/{amount}
-Comprar bitcoin: GET /v1/api/bitcoin/buy/{amount}
-Amount é do tipo float
-Exemplo de requisição:
-Header: 
-Authorization: BEARER + <TOKEN>
-GET http://localhost:8080/v1/api/bitcoin/sell/918.2
-GET http://localhost:8080/v1/api/bitcoin/buy/918.2
+<p>Contanto com os relatórios, existem 4 rotas:</p>
+<p>Vender bitcoin: GET /v1/api/bitcoin/sell/{amount}</p>
+<p>Comprar bitcoin: GET /v1/api/bitcoin/buy/{amount}</p>
+<p>Amount é do tipo float</p>
+<p>Exemplo de requisição:</p>
+<p>Header: </p>
+<p>Authorization: BEARER + <TOKEN></p>
+<p>GET http://localhost:8080/v1/api/bitcoin/sell/918.2</p>
+<p>GET http://localhost:8080/v1/api/bitcoin/buy/918.2</p>
 
-Relatório por usuário: GET /v1/api/bitcoin/reports/byuser/{user_id}
-user_id é do tipo int
-Relatório por data: GET /v1/api/bitcoin/reports/byday/{date}
-date tem o seguinte formato: yyyy-MM-dd
-Exemplo de requisição:
-Authorization: BEARER + <TOKEN>
-GET http://localhost:8080/v1/api/bitcoin/reports/byuser/5
-GET http://localhost:8080/v1/api/bitcoin/reports/byday/2018-10-22
+<p>Relatório por usuário: GET /v1/api/bitcoin/reports/byuser/{user_id}</p>
+<p>user_id é do tipo int</p>
+<p>Relatório por data: GET /v1/api/bitcoin/reports/byday/{date}</p>
+<p>date tem o seguinte formato: yyyy-MM-dd</p>
+<p>Exemplo de requisição:</p>
+<p>Authorization: BEARER + <TOKEN></p>
+<p>GET http://localhost:8080/v1/api/bitcoin/reports/byuser/5</p>
+<p>GET http://localhost:8080/v1/api/bitcoin/reports/byday/2018-10-22</p>
 
 # BEARER Token
-O token pode ser gerado pelo site: https://jwt.io/ usando a chave My secret
-No atual estado da aplicação, somente o user_id é usado. O seguinte header foi usado como teste:
-BEARER eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo1LCJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiZW1haWwiOiJnaW92YW5uaWJheWVybGVpbjEyQGdtYWlsLmNvbWp3dCIsImlhdCI6MTUxNjIzOTAyMn0.wT2QiwiW0LK4qo6IxeIKBIkIBFrW2ucUHNp0I8HwWfE
-este toke representa o seguinte usuário:
-"user_id": 5,
-"sub": "1234567890",
-"name": "John Doe",
-"email": "giovannibayerlein12@gmail.comjwt",
+<p>O token pode ser gerado pelo site: https://jwt.io/ usando a chave My secret</p>
+<p>No atual estado da aplicação, somente o user_id é usado. O seguinte header foi usado como teste:</p>
+<p>BEARER </p>
+<p>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo1LCJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiZW1haWwiOiJnaW92YW5uaWJheWVybGVpbjEy</p>
+<p>QGdtYWlsLmNvbWp3dCIsImlhdCI6MTUxNjIzOTAyMn0.wT2QiwiW0LK4qo6IxeIKBIkIBFrW2ucUHNp0I8HwWfE</p>
+<p>este toke representa o seguinte usuário:</p>
+<p>"user_id": 5,</p>
+<p>"sub": "1234567890",</p>
+<p>"name": "John Doe",</p>
+<p>"email": "giovannibayerlein12@gmail.comjwt",</p>
