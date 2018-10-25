@@ -30,7 +30,7 @@
 <p>GET http://localhost:8080/v1/api/bitcoin/reports/byday/2018-10-22</p>
 
 # BEARER Token
-<p>O token pode ser gerado pelo site: https://jwt.io/ usando a chave My secret</p>
+<p>O token pode ser gerado pelo site: https://jwt.io/ usando a chave 'My secret'</p>
 <p>No atual estado da aplicação, somente o user_id é usado. O seguinte header foi usado como teste:</p>
 <p>BEARER </p>
 <p>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo1LCJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiZW1haWwiOiJnaW92YW5uaWJheWVybGVpbjEy</p>
@@ -42,7 +42,7 @@
 <p>"email": "giovannibayerlein12@gmail.comjwt",</p>
 
 # Setup
-<p>Na raiz do projeto existe um arquivo 'env.list', este arquivo contém algumas variaveis que parametrizam a API. Caso haja a necessidade de mudar alguma configuração, então é só mudar o valor que está definido neste arquivo e a mudança refletir na api</p>
-<p>Foi utilizado um conteiner Docker para publicar a API, segue exemplo de comando utilizados:</p>
+<p>Na raiz do projeto existe um arquivo 'env.list', este arquivo contém algumas variaveis que parametrizam a API. Caso haja a necessidade de mudar alguma configuração, então é só mudar o valor que está definido neste arquivo e a mudança refletirá na api</p>
+<p>Foi utilizado um conteiner Docker para publicar a API, segue exemplo de comandos utilizados:</p>
 <p>Buildar o projeto: $ docker build -t red-coins-app .</p>
-<p>Publicar o projeto: </p>
+<p>Publicar o projeto: $ docker run --publish 8080:8080 --name running-red-coins-app --env-file=env.list --rm red-coins-app</p>
