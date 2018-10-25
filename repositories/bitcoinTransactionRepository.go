@@ -25,7 +25,7 @@ func (repository *BitCoinTransactionRepository) GenerateReportByDate(date string
 	rows, err := repository.Db.Query(tsql)
 	if err != nil {
 		fmt.Println("Error reading rows: " + err.Error())
-		return nil, error
+		return nil, err
 	}
 	defer rows.Close()
 	for rows.Next() {
@@ -36,7 +36,7 @@ func (repository *BitCoinTransactionRepository) GenerateReportByDate(date string
 		transactions = append(transactions, transaction)
 		if err != nil {
 			fmt.Println("Error reading rows: " + err.Error())
-			return nil, error
+			return nil, err
 		}
 		fmt.Println(transactions)
 	}
@@ -50,7 +50,7 @@ func (repository *BitCoinTransactionRepository) GenerateReportByUserID(userId in
 	rows, err := repository.Db.Query(tsql)
 	if err != nil {
 		fmt.Println("Error reading rows: " + err.Error())
-		return nil, error
+		return nil, err
 	}
 	defer rows.Close()
 	for rows.Next() {
@@ -61,7 +61,7 @@ func (repository *BitCoinTransactionRepository) GenerateReportByUserID(userId in
 		transactions = append(transactions, transaction)
 		if err != nil {
 			fmt.Println("Error reading rows: " + err.Error())
-			return nil, error
+			return nil, err
 		}
 		fmt.Println(transactions)
 	}
@@ -73,30 +73,30 @@ func (repository *BitCoinTransactionRepository) RegisterTransaction(transaction 
 
 	if repository.ErrDB != nil {
 		fmt.Println(" Error open db:", repository.ErrDB.Error())
-		return error
+		return repository.ErrDB
 	}
 	tx, err := repository.Db.Begin()
 	if err != nil {
 		fmt.Println(" Error open db:", err.Error())
-		return error
+		return err
 	}
 	defer tx.Rollback()
 	stmt, err := tx.Prepare("INSERT INTO bitcoin_transaction(amount, total_value, price_used, transaction_date, transaction_type, user_id) VALUES(?, ?, ?, ?, ?, ?)")
 	if err != nil {
 		fmt.Println(" Error open db:", err.Error())
-		return error
+		return err
 	}
 	defer stmt.Close()
 
 	_, errq := stmt.Exec(transaction.Amount, transaction.Total, transaction.PriceUsed, transaction.Date, transaction.Type, transaction.User.Id)
 	if errq != nil {
 		fmt.Println(" Error open db:", errq.Error())
-		return error
+		return errq
 	}
 	err = tx.Commit()
 	if err != nil {
 		fmt.Println(" Error open db:", err.Error())
-		return error
+		return err
 	}
 
 	return nil
