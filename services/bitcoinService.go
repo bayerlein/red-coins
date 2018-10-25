@@ -42,7 +42,7 @@ func (service *BitCoinService) GenerateReportByUser(userId int) ([]models.BitCoi
 func (service *BitCoinService) GenerateReportByDate(date string) ([]models.BitCoinTransaction, string) {
 	transactions := service.Repository.GenerateReportByDate(date)
 
-	return transactions, fmt.Sprintf("Relatorio data: %d", date)
+	return transactions, fmt.Sprintf("Relatorio data: %s", date)
 
 }
 
