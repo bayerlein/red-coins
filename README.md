@@ -16,7 +16,7 @@
 <p>Amount é do tipo float</p>
 <p>Exemplo de requisição:</p>
 <p>Header: </p>
-<p>Authorization: BEARER + <TOKEN></p>
+<p>Authorization: BEARER + TOKEN</p>
 <p>GET http://localhost:8080/v1/api/bitcoin/sell/918.2</p>
 <p>GET http://localhost:8080/v1/api/bitcoin/buy/918.2</p>
 
@@ -25,7 +25,7 @@
 <p>Relatório por data: GET /v1/api/bitcoin/reports/byday/{date}</p>
 <p>date tem o seguinte formato: yyyy-MM-dd</p>
 <p>Exemplo de requisição:</p>
-<p>Authorization: BEARER + <TOKEN></p>
+<p>Authorization: BEARER + TOKEN</p>
 <p>GET http://localhost:8080/v1/api/bitcoin/reports/byuser/5</p>
 <p>GET http://localhost:8080/v1/api/bitcoin/reports/byday/2018-10-22</p>
 
