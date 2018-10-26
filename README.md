@@ -46,3 +46,4 @@
 <p>Foi utilizado um conteiner Docker para publicar a API, segue exemplo de comandos utilizados:</p>
 <p>Buildar o projeto: $ docker build -t red-coins-app .</p>
 <p>Publicar o projeto: $ docker run --publish 8080:8080 --name running-red-coins-app --env-file=env.list --rm red-coins-app</p>
+<p>O arquivo script.sql contém os códigos para gerar as tabelas do sistema</p>
